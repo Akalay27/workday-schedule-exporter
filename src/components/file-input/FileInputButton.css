@@ -1,14 +1,21 @@
+.FileInputButton {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .FileInputButton label {
   background-color: var(--blue);
   border: none;
   border-radius: 10px;
   color: white;
-  padding: 15px 32px;
+  padding: 1rem 2rem;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+  /* font-size: 2rem; */
+  margin: 1rem 1rem;
   cursor: pointer;
 }
 
