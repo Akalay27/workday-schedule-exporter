@@ -16,7 +16,11 @@ class FileInputButton extends React.Component {
 	render() {
 		return (
 			<form className="FileInputButton">
-				<label htmlFor="file">Select File</label>
+				<label htmlFor="file">
+					{
+						this.props.step === "Processing" ? <div className="spinner"></div> : this.props.step
+					}
+				</label>
 				<input
 					type="file"
 					id="file"

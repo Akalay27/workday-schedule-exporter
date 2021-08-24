@@ -1,6 +1,7 @@
 :root {
 	--black: #000000;
 	--white: #FFFFFF;
+	--dark-gray: #222222;
 	--light-gray: #EEEEEE;
 	--blue: hsl(200, 100%, 40%);
 	--dark-blue: hsl(200, 100%, 25%);

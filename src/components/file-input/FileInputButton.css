@@ -1,28 +1,47 @@
 .FileInputButton {
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	padding: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .FileInputButton label {
-  background-color: var(--blue);
-  border: none;
-  border-radius: 10px;
-  color: white;
-  padding: 1rem 2rem;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  /* font-size: 2rem; */
-  margin: 1rem 1rem;
-  cursor: pointer;
+	min-width: 200px;
+	min-height: 70px;
+	background-color: var(--blue);
+	border: none;
+	border-radius: 10px;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 1rem 1rem;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .FileInputButton label:hover {
-  background-color: var(--dark-blue);
+	background-color: var(--dark-blue);
 }
 
 .FileInputButton input {
 	display: none;
+}
+
+.spinner {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	opacity: 0.8;
+	border: 4px solid var(--dark-gray);
+	border-top-color: var(--white);
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
 }
