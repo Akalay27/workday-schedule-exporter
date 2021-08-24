@@ -1,0 +1,21 @@
+.FileInputButton label {
+  background-color: var(--blue);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.FileInputButton label:hover {
+  background-color: var(--dark-blue);
+}
+
+.FileInputButton input {
+	display: none;
+}
