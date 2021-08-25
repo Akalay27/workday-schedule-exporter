@@ -1,29 +1,34 @@
-import FileInputDragDrop from './components/file-input/FileInputDragDrop'
-import FileInputButton from './components/file-input/FileInputButton'
-import './App.css';
 import { useState } from 'react';
+import Converter from './util/Converter';
+import FileInputDragDrop from './components/FileInputDragDrop'
+import FileInputButton from './components/FileInputButton'
+import Step from './util/Step'
+import './App.css';
 
 function App() {
-	const Step = {
-		SELECTING: "Select File",
-		PROCESSING: "Processing",
-		DOWNLOADING: "Downloading"
-	};
 	const [step, setStep] = useState(Step.SELECTING);
-	const beginProcessing = (file) => {
-		console.log(file);
-		setStep(Step.PROCESSING);
+	const uploadFile = (file) => {
+		convertFile(file);
 	};
+	const convertFile = async (file) => {
+		Converter.load(file, setStep);
+	}
+
 	return (
 		<div className="App">
-			<FileInputDragDrop handleFile={(file) => {beginProcessing(file)}}>
+			<FileInputDragDrop handleFile={(file) => uploadFile(file)}>
 				<p>Drop to Upload</p>
 			</FileInputDragDrop>
 			<header className="App-header">
 				<h1>Workday Schedule Exporter</h1>
 				<p>Upload an .XLSX or .CSV spreadsheet and convert it to an .ICS</p>
 			</header>
-			<FileInputButton step={step} handleFile={(file) => {beginProcessing(file)}} />
+
+			<FileInputButton handleFile={(file) => uploadFile(file)}>
+				Select File
+			</FileInputButton>
+
+			<p>{step}</p>
 		</div>
 	);
 }
