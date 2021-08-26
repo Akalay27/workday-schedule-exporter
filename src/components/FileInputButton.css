@@ -8,6 +8,7 @@
 .FileInputButton label {
 	min-width: 200px;
 	min-height: 70px;
+	font-size: 32px;
 	background-color: var(--blue);
 	border: none;
 	border-radius: 10px;
@@ -28,16 +29,6 @@
 
 .FileInputButton input {
 	display: none;
-}
-
-.spinner {
-	width: 32px;
-	height: 32px;
-	border-radius: 50%;
-	opacity: 0.8;
-	border: 4px solid var(--dark-gray);
-	border-top-color: var(--white);
-	animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
