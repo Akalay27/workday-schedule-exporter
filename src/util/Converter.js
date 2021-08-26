@@ -7,17 +7,17 @@ const BLANK_ROWS = 3;
 const InitialOptions = {
 	DATES: 
 	{
-		'A': ["2021-08-25","2021-10-13"],
+		'A': ["2021-08-26","2021-10-13"],
 		'B': ["2021-10-20","2021-12-10"],
-		'C': ["2022-01-25","2022-03-04"],
-		'D': ["2022-03-14","2022-05-03"],
+		'C': ["2022-01-13","2022-03-04"],
+		'D': ["2022-03-14","2022-05-02"],
 	},
 	SPECIAL_SCHEDULES:
-	{
-		'2021-8-25': 'MO',
-		'2021-1-12': 'MO',
-		'2021-5-3': 'FR' // Not going to deal with this one at the moment.
-	}
+	[
+		['2021-08-25', 'MO', 'A'],
+		['2021-01-12', 'MO', 'C'],
+		['2021-05-03', 'FR', 'D'] // Not going to deal with this one at the moment.
+	]
 	// Add the weird days to switch
 }
 const WEEKDAY_NAMES = {
@@ -54,9 +54,9 @@ class Converter {
 	static convert(sheet, setStep) {
 		sheet["!ref"] = 'L16'
 		var calendar = null;
-		
+		var optionsArr = [];
 		var range = XLSX.utils.decode_range('A1:K50');
-		for (var rowNum = BLANK_ROWS + 1 + range.s.r; rowNum < range.e.r; rowNum++) {
+		for (var rowNum = BLANK_ROWS + range.s.r; rowNum < range.e.r; rowNum++) {
 			// Check if next class row exists
 			if (sheet[XLSX.utils.encode_cell({r: rowNum, c: 0})] != null) {
 				// Read necessary cells
@@ -92,7 +92,8 @@ class Converter {
 							frequency: 'WEEKLY',
 							weekdays: weekdays,
 							end: new Date(finishTimestamp.format()),
-						}
+						},
+						term: term
 					}
 
 					if (calendar == null) {
@@ -101,10 +102,36 @@ class Converter {
 					else {
 						calendar.addEvent(new ICalendar(options));
 					}
+					optionsArr[optionsArr.length] = options;
 				}
 			}	
 		}
-
+		
+		// deal with special schedule days
+		for (var d = 0; d < InitialOptions.SPECIAL_SCHEDULES.length; d++) {
+			
+			let data = InitialOptions.SPECIAL_SCHEDULES[d];
+			for (var cls = 0; cls < optionsArr.length; cls++) {
+				let weekdaysArr = optionsArr[cls].recurrence.weekdays
+				if (weekdaysArr.includes(data[1]) && optionsArr[cls].term === data[2]) {
+					var newOption = {};
+					Object.assign(newOption,optionsArr[cls]);
+					delete newOption.recurrence;
+					let newDate = data[0].split("-");
+					newOption.start.setFullYear(newDate[0]);
+					newOption.start.setMonth(newDate[1] - 1);
+					newOption.start.setDate(newDate[2]);
+					newOption.end.setFullYear(newDate[0]);
+					newOption.end.setMonth(newDate[1] - 1);
+					newOption.end.setDate(newDate[2]);
+					calendar.addEvent(new ICalendar(newOption));
+				} else {
+					
+				}
+			}
+	
+		}
+	
 		if (calendar) {
 			calendar.download("Workday Schedule.ics");
 			setStep(Step.SUCCESS);
